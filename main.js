@@ -3,8 +3,14 @@ var app = express()
 
 //route, routing
 //app.get('/',(req, res) => res.send('Hello World!'))
-app.get('/',function(req, res){
-  return res.send('/');
+app.get('/',function(request, response){
+  fs.readdir('./data',function(error, filelist){
+    var title = "Welcome";
+    var description = "Hello, Node.js";
+    var list = template.list(filelist);
+    var html = template.html(title, list, `<h2>${title}</h2>${description}`,`<a href="/create">craete</a>`);
+    response.send(html);
+  });
 });
 
 app.get('/page',(req,res) => res.send('/page'));
